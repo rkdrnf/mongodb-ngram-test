@@ -1,56 +1,87 @@
-require('dotenv').config()
+require("dotenv").config();
+
 const grammit = require("./grammit");
 const { MongoClient } = require("mongodb");
-const process = require('process');
+const process = require("process");
 
-/** @param {MongoClient} dbClient */
-async function fetch(dbClient) {
-  const searchgram = grammit(
-    "This is a base sentence for TM matching algorithm test.",
-    true
-  );
-
-  const col = dbClient.db("ngram").collection("sentences");
-
-  const results = await col
-    .aggregate()
-    .match({
-      ngrams: { $in: searchgram },
-    })
-    .project({
-      size: {
-        $size: "$ngrams",
-      },
-      source: "$text",
-      found: {
+function projectScore(searchgram, n, zValue) {
+  return {
+    $divide: [
+      {
         $size: {
           $filter: {
-            input: "$ngrams",
+            input: `$ngrams${n}`,
             cond: {
               $in: ["$$this", searchgram],
             },
           },
         },
       },
-      score: {
-        $divide: [
-          {
-            $size: {
-              $filter: {
-                input: "$ngrams",
-                cond: {
-                  $in: ["$$this", searchgram],
-                },
-              },
-            },
-          },
-          { $size: "$ngrams" },
+      {
+        $add: [
+          { $multiply: [{ $size: `$ngrams${n}` }, 1 - zValue] },
+          { $multiply: [searchgram.length, zValue] },
         ],
       },
-    })
+    ],
+  };
+}
+
+/** @param {MongoClient} dbClient */
+async function fetch(dbClient) {
+  const col = dbClient.db("ngram").collection("sentences");
+
+  const zValue = Number(process.env.Z_VALUE);
+  const nLowerbound = Number(process.env.NGRAM_LOWERBOUND);
+  const nUpperbound = Number(process.env.NGRAM_UPPERBOUND);
+
+  console.log(zValue, nLowerbound, nUpperbound);
+
+  const querySentence =
+    "This is a base sentence for TM matching algorithm test.";
+
+  const searchgrams = {};
+
+  const projection = {
+    source: "$text",
+  };
+
+  const nValues = [];
+  for (let n = nLowerbound; n <= nUpperbound; n++) {
+    nValues.push(n);
+    searchgrams[n] = grammit(querySentence, true, n);
+  }
+
+  projection["score"] = {
+    $divide: [
+      {
+        $add: nValues.map((n) => projectScore(searchgrams[n], n, zValue)),
+      },
+      nValues.length,
+    ],
+  };
+
+  for (let n = nLowerbound; n <= nUpperbound; n++) {
+    projection[`score${n}`] = projectScore(searchgrams[n], n, zValue);
+  }
+
+  const match = {
+    $or: nValues.map((n) => {
+      const key = `ngrams${n}`;
+      return {
+        [key]: { $in: searchgrams[n] },
+      };
+    }),
+  };
+
+  const results = await col
+    .aggregate()
+    .match(match)
+    .project(projection)
     .sort({ score: -1 })
     .toArray();
 
+  console.log("matched sentences", results.length);
   console.log(results);
 }
 

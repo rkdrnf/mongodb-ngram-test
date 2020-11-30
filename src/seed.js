@@ -5,7 +5,22 @@ const { MongoClient } = require("mongodb");
 const grammit = require("./grammit");
 
 const seedPath = "./data/seed.json";
-// const seedPath = "./data/name-seed.json";
+
+const nLowerbound = Number(process.env.NGRAM_LOWERBOUND);
+const nUpperbound = Number(process.env.NGRAM_UPPERBOUND);
+
+/** @type {item: string} */
+function generateRecord(item) {
+  const record = {
+    text: item.text,
+  };
+
+  for (let n = nLowerbound; n <= nUpperbound; n++) {
+    record[`ngrams${n}`] = grammit(item.text, true, n);
+  }
+
+  return record;
+}
 
 /** @param {MongoClient} dbClient */
 async function seed(dbClient) {
@@ -30,17 +45,7 @@ async function seed(dbClient) {
     console.log("collection does not exists");
   }
 
-  await Promise.all(
-    items.map((item) =>
-      col.insertOne(
-        {
-          text: item.text,
-          ngrams: grammit(item.text, true),
-        },
-        {}
-      )
-    )
-  );
+  await Promise.all(items.map((item) => col.insertOne(generateRecord(item))));
 }
 
 async function run() {

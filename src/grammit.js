@@ -11,17 +11,17 @@ function splitToWords(text) {
 
 /** @param {string} inputraw */
 /** @param {boolean} word */
-module.exports = (inputraw, word) => {
+module.exports = (inputraw, word, nValue) => {
   let input = inputraw.toLowerCase();
   const grams = [];
 
   const spl = word ? splitToWords(input) : splitToCharacters(input);
 
-  if (input.length < 3) return grams;
+  if (input.length < nValue) return grams;
 
   spl.forEach((char, index) => {
-    if (index < spl.length - 2) {
-      grams.push(spl.slice(index, index + 3).join(" "));
+    if (index < spl.length - (nValue - 1)) {
+      grams.push(spl.slice(index, index + nValue).join(" "));
     }
   });
 

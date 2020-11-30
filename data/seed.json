@@ -30,6 +30,9 @@
     "text": "a replaced sentence for TM matching algorithm test with addition."
   },
   {
+    "text": "a little overlap"
+  },
+  {
     "text": "short word"
   },
   {
@@ -45,6 +48,3 @@
     "text": "short word with many more additional words"
   }
 ]
-
-
-
