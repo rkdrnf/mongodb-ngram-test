@@ -1,0 +1,50 @@
+[
+  {
+    "text": "This is a base sentence for TM matching algorithm test."
+  },
+  {
+    "text": "This is a base sentence for TM matching algorithm test with many more additional non-related words."
+  },
+  {
+    "text": "This is a base sentence for TM matching algorithm test with 4 more words."
+  },
+  {
+    "text": "This is a base sentence for TM matching algorithm test with addition."
+  },
+  {
+    "text": "This is a replaced sentence for TM matching algorithm test."
+  },
+  {
+    "text": "These are replaced sentences for TM matching algorithm test."
+  },
+  {
+    "text": "This is a sentence for TM matching algorithm test."
+  },
+  {
+    "text": "a sentence for TM matching algorithm test."
+  },
+  {
+    "text": "a replaced sentence for TM matching algorithm test."
+  },
+  {
+    "text": "a replaced sentence for TM matching algorithm test with addition."
+  },
+  {
+    "text": "short word"
+  },
+  {
+    "text": "short word with"
+  },
+  {
+    "text": "short word with additional"
+  },
+  {
+    "text": "short word with additional word"
+  },
+  {
+    "text": "short word with many more additional words"
+  }
+]
+
+
+
