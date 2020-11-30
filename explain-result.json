@@ -1,0 +1,405 @@
+{
+  "stages": [
+    {
+      "$cursor": {
+        "queryPlanner": {
+          "plannerVersion": 1,
+          "namespace": "ngram.sentences",
+          "indexFilterSet": false,
+          "parsedQuery": {
+            "ngrams1": {
+              "$in": [
+                "a",
+                "algorithm",
+                "base",
+                "for",
+                "is",
+                "matching",
+                "sentence",
+                "test",
+                "this",
+                "tm"
+              ]
+            }
+          },
+          "queryHash": "513EB401",
+          "planCacheKey": "B4E925FA",
+          "winningPlan": {
+            "stage": "PROJECTION_DEFAULT",
+            "transformBy": {
+              "_id": true,
+              "source": "$text",
+              "score": {
+                "$divide": [
+                  {
+                    "$add": [
+                      {
+                        "$divide": [
+                          {
+                            "$size": [
+                              {
+                                "$filter": {
+                                  "input": "$ngrams1",
+                                  "as": "this",
+                                  "cond": {
+                                    "$in": [
+                                      "$$this",
+                                      {
+                                        "$const": [
+                                          "this",
+                                          "is",
+                                          "a",
+                                          "base",
+                                          "sentence",
+                                          "for",
+                                          "tm",
+                                          "matching",
+                                          "algorithm",
+                                          "test"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "$add": [
+                              {
+                                "$multiply": [
+                                  {
+                                    "$size": [
+                                      "$ngrams1"
+                                    ]
+                                  },
+                                  {
+                                    "$const": 0.5
+                                  }
+                                ]
+                              },
+                              {
+                                "$const": 5
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "$divide": [
+                          {
+                            "$size": [
+                              {
+                                "$filter": {
+                                  "input": "$ngrams2",
+                                  "as": "this",
+                                  "cond": {
+                                    "$in": [
+                                      "$$this",
+                                      {
+                                        "$const": [
+                                          "this is",
+                                          "is a",
+                                          "a base",
+                                          "base sentence",
+                                          "sentence for",
+                                          "for tm",
+                                          "tm matching",
+                                          "matching algorithm",
+                                          "algorithm test"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "$add": [
+                              {
+                                "$multiply": [
+                                  {
+                                    "$size": [
+                                      "$ngrams2"
+                                    ]
+                                  },
+                                  {
+                                    "$const": 0.5
+                                  }
+                                ]
+                              },
+                              {
+                                "$const": 4.5
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "$divide": [
+                          {
+                            "$size": [
+                              {
+                                "$filter": {
+                                  "input": "$ngrams3",
+                                  "as": "this",
+                                  "cond": {
+                                    "$in": [
+                                      "$$this",
+                                      {
+                                        "$const": [
+                                          "this is a",
+                                          "is a base",
+                                          "a base sentence",
+                                          "base sentence for",
+                                          "sentence for tm",
+                                          "for tm matching",
+                                          "tm matching algorithm",
+                                          "matching algorithm test"
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "$add": [
+                              {
+                                "$multiply": [
+                                  {
+                                    "$size": [
+                                      "$ngrams3"
+                                    ]
+                                  },
+                                  {
+                                    "$const": 0.5
+                                  }
+                                ]
+                              },
+                              {
+                                "$const": 4
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "$const": 3
+                  }
+                ]
+              },
+              "score1": {
+                "$divide": [
+                  {
+                    "$size": [
+                      {
+                        "$filter": {
+                          "input": "$ngrams1",
+                          "as": "this",
+                          "cond": {
+                            "$in": [
+                              "$$this",
+                              {
+                                "$const": [
+                                  "this",
+                                  "is",
+                                  "a",
+                                  "base",
+                                  "sentence",
+                                  "for",
+                                  "tm",
+                                  "matching",
+                                  "algorithm",
+                                  "test"
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "$add": [
+                      {
+                        "$multiply": [
+                          {
+                            "$size": [
+                              "$ngrams1"
+                            ]
+                          },
+                          {
+                            "$const": 0.5
+                          }
+                        ]
+                      },
+                      {
+                        "$const": 5
+                      }
+                    ]
+                  }
+                ]
+              },
+              "score2": {
+                "$divide": [
+                  {
+                    "$size": [
+                      {
+                        "$filter": {
+                          "input": "$ngrams2",
+                          "as": "this",
+                          "cond": {
+                            "$in": [
+                              "$$this",
+                              {
+                                "$const": [
+                                  "this is",
+                                  "is a",
+                                  "a base",
+                                  "base sentence",
+                                  "sentence for",
+                                  "for tm",
+                                  "tm matching",
+                                  "matching algorithm",
+                                  "algorithm test"
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "$add": [
+                      {
+                        "$multiply": [
+                          {
+                            "$size": [
+                              "$ngrams2"
+                            ]
+                          },
+                          {
+                            "$const": 0.5
+                          }
+                        ]
+                      },
+                      {
+                        "$const": 4.5
+                      }
+                    ]
+                  }
+                ]
+              },
+              "score3": {
+                "$divide": [
+                  {
+                    "$size": [
+                      {
+                        "$filter": {
+                          "input": "$ngrams3",
+                          "as": "this",
+                          "cond": {
+                            "$in": [
+                              "$$this",
+                              {
+                                "$const": [
+                                  "this is a",
+                                  "is a base",
+                                  "a base sentence",
+                                  "base sentence for",
+                                  "sentence for tm",
+                                  "for tm matching",
+                                  "tm matching algorithm",
+                                  "matching algorithm test"
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "$add": [
+                      {
+                        "$multiply": [
+                          {
+                            "$size": [
+                              "$ngrams3"
+                            ]
+                          },
+                          {
+                            "$const": 0.5
+                          }
+                        ]
+                      },
+                      {
+                        "$const": 4
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "inputStage": {
+              "stage": "FETCH",
+              "inputStage": {
+                "stage": "IXSCAN",
+                "keyPattern": {
+                  "ngrams1": 1
+                },
+                "indexName": "ngrams1_1",
+                "isMultiKey": true,
+                "multiKeyPaths": {
+                  "ngrams1": [
+                    "ngrams1"
+                  ]
+                },
+                "isUnique": false,
+                "isSparse": false,
+                "isPartial": false,
+                "indexVersion": 2,
+                "direction": "forward",
+                "indexBounds": {
+                  "ngrams1": [
+                    "[\"a\", \"a\"]",
+                    "[\"algorithm\", \"algorithm\"]",
+                    "[\"base\", \"base\"]",
+                    "[\"for\", \"for\"]",
+                    "[\"is\", \"is\"]",
+                    "[\"matching\", \"matching\"]",
+                    "[\"sentence\", \"sentence\"]",
+                    "[\"test\", \"test\"]",
+                    "[\"this\", \"this\"]",
+                    "[\"tm\", \"tm\"]"
+                  ]
+                }
+              }
+            }
+          },
+          "rejectedPlans": []
+        }
+      }
+    },
+    {
+      "$sort": {
+        "sortKey": {
+          "score": -1
+        }
+      }
+    }
+  ],
+  "serverInfo": {
+    "host": "4ea41d88c724",
+    "port": 27017,
+    "version": "4.4.1",
+    "gitVersion": "ad91a93a5a31e175f5cbf8c69561e788bbc55ce1"
+  },
+  "ok": 1
+}

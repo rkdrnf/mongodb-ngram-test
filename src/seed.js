@@ -40,10 +40,13 @@ async function seed(dbClient) {
   const col = dbClient.db("ngram").collection("sentences");
   try {
     await col.drop();
+
     console.log("collection dropped");
   } catch {
     console.log("collection does not exists");
   }
+  const index = await col.createIndex({ ngrams1: 1 });
+  console.log("index created", index);
 
   await Promise.all(items.map((item) => col.insertOne(generateRecord(item))));
 }

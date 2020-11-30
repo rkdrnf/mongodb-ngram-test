@@ -65,13 +65,17 @@ async function fetch(dbClient) {
     projection[`score${n}`] = projectScore(searchgrams[n], n, zValue);
   }
 
+  // const match = {
+  //   $or: nValues.map((n) => {
+  //     const key = `ngrams${n}`;
+  //     return {
+  //       [key]: { $in: searchgrams[n] },
+  //     };
+  //   }),
+  // };
+
   const match = {
-    $or: nValues.map((n) => {
-      const key = `ngrams${n}`;
-      return {
-        [key]: { $in: searchgrams[n] },
-      };
-    }),
+    ngrams1: { $in: searchgrams[1] },
   };
 
   const results = await col
@@ -83,6 +87,15 @@ async function fetch(dbClient) {
 
   console.log("matched sentences", results.length);
   console.log(results);
+
+  const explain = await col
+    .aggregate()
+    .match(match)
+    .project(projection)
+    .sort({ score: -1 })
+    .explain();
+
+  console.log(JSON.stringify(explain));
 }
 
 async function run() {
