@@ -14,7 +14,9 @@
 Currently only 3-gram is used for scoring fetched sentences.
 Using weighted arithmetic mean score of multi ngram might results in better relavancy in fetched sentences.
 
-Currently, Score for specific ngram is calculated as below.
+
+## Score calculation
+Score is calculated as below.
 
 ```
 TM = The number of matched ngram segments in stored sentence
