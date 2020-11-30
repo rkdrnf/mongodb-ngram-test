@@ -9,15 +9,33 @@
 3. run `node src/seed.js` to populate test data set.
 4. run `node src/index.js` to get the result.
 
+## Possible improvements
+
+Currently only 3-gram is used for scoring fetched sentences.
+Using weighted arithmetic mean score of multi ngram might results in better relavancy in fetched sentences.
+
+Currently, Score for specific ngram is calculated as below.
+
+```
+TM = The number of matched ngram segments in stored sentence
+TT = The number of total ngram segments in stored sentence
+SM = The number of matched ngram segments in query sentence
+ST = The number of total ngram segments in query sentences
 
 
+Score = TM / TT
+```
+
+which does not gaurantee same score for a pair of sentences when querying each one as source / target and vice versa.
 
 ## Result
 
 When tested with sentence
+
 ```
 This is a base sentence for TM matching algorithm test.
 ```
+
 , below is the result.
 
 ```
@@ -94,4 +112,3 @@ This is a base sentence for TM matching algorithm test.
   }
 ]
 ```
-
